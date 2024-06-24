@@ -66,6 +66,9 @@ public void checkPlayerBulletsAndEnemies() {
 			if(checkHit(e,b)) {
 				System.out.println("あたり");
 				hits++;
+				e.life--;
+			}
+			if(e.life<=0) {
 				GameWorld.enemies.remove(j);
 			}
 			else {
