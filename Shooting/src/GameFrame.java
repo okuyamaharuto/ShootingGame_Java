@@ -14,7 +14,7 @@ public void run() {
 		movePlayerBullets();
 		moveEnemies();
 		checkPlayerAndEnemies();
-		
+		checkPlayerBulletsAndEnemies();
 		sleep(0.03);
 	}
 	}
@@ -49,6 +49,34 @@ public void checkPlayerAndEnemies() {
 		   Math.abs(e.y-GameWorld.player.y)<=30) {
 			System.out.println("やられた!");
 			GameWorld.player.y =-1000;
+		}
+	}
+}
+
+public void checkPlayerBulletsAndEnemies() {
+	int i = 0;
+	while(i<GameWorld.playerBullets.size()) {
+		//プレイヤー弾一つ一つについて、変数bに入れてくり返し実行する
+		PlayerBullet b = GameWorld.playerBullets.get(i);
+		int j =0;
+		int hits =0;
+		while(j<GameWorld.enemies.size()) {
+			//敵一つ一つについて、変数eに入れてくり返し実行する
+			Enemy e = GameWorld.enemies.get(j);
+			//敵eとプレイヤー弾bが衝突していたら「あたり」と表示
+			if(Math.abs(e.x-b.x)<=30 && Math.abs(e.y-b.y)<=30) {
+				System.out.println("あたり");
+				hits++;
+				GameWorld.enemies.remove(j);
+			}
+			else {
+			j++;
+			}
+		}
+		if(hits>0) {
+			GameWorld.playerBullets.remove(i);
+		}else {
+			i++;
 		}
 	}
 }
